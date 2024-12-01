@@ -1,4 +1,4 @@
-// Referencias al formulario y la lista de citas
+// Referencias al formulario y la lista de citass
 const appointmentForm = document.getElementById("appointment-form");
 const appointmentsList = document.getElementById("appointments-list");
 

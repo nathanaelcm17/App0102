@@ -1,0 +1,57 @@
+# Ignorar archivos y carpetas del sistema y configuración
+.RapidMiner/
+.bash_history
+.cache/
+.gitconfig
+.lesshst
+.ssh/
+.vscode/
+.xmlresolver.org/
+
+# Ignorar carpetas de datos y configuraciones de usuario
+3D Objects/
+AppData/
+Contacts/
+Documents/
+Downloads/
+Favorites/
+Links/
+Microsoft/
+Music/
+OneDrive/
+Pictures/
+Saved Games/
+Searches/
+TestComplete/
+Tracing/
+Videos/
+
+# Ignorar archivos temporales y de configuración del sistema operativo
+Desktop/Discord.lnk
+Desktop/NATHANAEL/
+Desktop/Nathanael - Chrome.lnk
+Desktop/Nathanale presupuesto 2024.xlsx
+Desktop/Otros/
+Desktop/PS.txt
+Desktop/Postman.lnk
+Desktop/Repositorio nuevo sistema.txt
+Desktop/Visual Studio Code.lnk
+Desktop/compra ebay.jpg
+Desktop/credenciales powerBI.txt
+Desktop/desktop.ini
+Desktop/pass hotm.txt
+Desktop/~$ Documento de requerimientos de software - API SUB.doc
+Desktop/~$Base de datos Por la Ficha Básica de Emergencia (FIBE) Posterior al Paso del Huracán Fiona actualizada 08112022.xlsx
+Desktop/~$CRUCE AGREGAR_TELEFONO.xlsx
+Desktop/~WRL0005.tmp
+
+# Ignorar archivos de configuración y registro del sistema
+NTUSER.DAT
+NTUSER.DAT{*}.TM.blf
+NTUSER.DAT{*}.TMContainer*.regtrans-ms
+ntuser.dat.LOG1
+ntuser.dat.LOG2
+ntuser.ini
+
+# Ignorar archivos de autenticación
+smartbear.auth

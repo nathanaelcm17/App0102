@@ -5,6 +5,7 @@ const appointmentsList = document.getElementById("appointments-list");
 // Manejar el envío del formulario
 appointmentForm.addEventListener("submit", function (e) {
   e.preventDefault(); // Evita el envío del formulario
+  
 
   // Obtener los valores de los campos
   const name = document.getElementById("name").value;

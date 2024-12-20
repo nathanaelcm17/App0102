@@ -6,6 +6,6 @@ const server = createServer((req, res) => {
 });
 
 server.listen(3000, () => {
-    const newLocal = "Servidor ejecutándose en http://localhost:300";
+    const newLocal = "Servidor ejecutándose en http://localhost:3000";
     console.log(newLocal);
   });

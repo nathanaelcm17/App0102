@@ -57,6 +57,25 @@ app.post("/api/citas", (req, res) => {
   );
 });
 
+// Ruta para obtener todas las citas con el nombre del procedimiento
+app.get("/api/citas", (req, res) => {
+  const db = new sqlite3.Database("ap0102.db");
+  db.all(
+    `SELECT c.id, c.nombre_paciente, c.email, c.fecha, c.hora, p.nombre as procedimiento
+     FROM citas c
+     JOIN procedimientos p ON c.procedimiento_id = p.id
+     ORDER BY c.fecha DESC, c.hora DESC`,
+    [],
+    (err, rows) => {
+      db.close();
+      if (err) {
+        return res.status(500).json({ error: "Error al consultar citas" });
+      }
+      res.json(rows);
+    }
+  );
+});
+
 // Servir index.html por defecto
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));

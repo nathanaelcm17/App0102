@@ -5,16 +5,6 @@ let db = new sqlite3.Database("ap0102.db");
 
 // Limpiar registros de pruebas y crear tablas normalizadas para citas y procedimientos
 db.serialize(() => {
-  // Eliminar registros de las tablas si existen
-  db.run("DELETE FROM citas", (err) => {
-    if (err) console.log("No se pudo limpiar la tabla 'citas' o no existe aún.");
-    else console.log("Registros de 'citas' eliminados.");
-  });
-  db.run("DELETE FROM procedimientos", (err) => {
-    if (err) console.log("No se pudo limpiar la tabla 'procedimientos' o no existe aún.");
-    else console.log("Registros de 'procedimientos' eliminados.");
-  });
-
   // Tabla de procedimientos
   db.run(
     `CREATE TABLE IF NOT EXISTS procedimientos (
@@ -41,6 +31,19 @@ db.serialize(() => {
     (err) => {
       if (err) throw err;
       console.log("Tabla 'citas' creada o ya existe.");
+    }
+  );
+
+  // Consultar y mostrar todas las citas con el nombre del procedimiento
+  db.all(
+    `SELECT c.id, c.nombre_paciente, c.email, c.fecha, c.hora, p.nombre as procedimiento
+     FROM citas c
+     JOIN procedimientos p ON c.procedimiento_id = p.id
+     ORDER BY c.fecha DESC, c.hora DESC`,
+    [],
+    (err, rows) => {
+      if (err) throw err;
+      console.log("Citas almacenadas:", rows);
       db.close();
     }
   );

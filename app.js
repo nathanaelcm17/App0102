@@ -27,19 +27,22 @@ appointmentForm.addEventListener("submit", function (e) {
       procedimiento: procedure,
     }),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        // Crear un elemento de lista para la cita
-        const appointmentItem = document.createElement("li");
-        appointmentItem.innerText = `📅 ${date} - 🕒 ${time} - 🧑 ${name} - 📧 ${email} - 🛠️ Procedimiento: ${procedure}`;
-        appointmentsList.appendChild(appointmentItem);
-        appointmentForm.reset();
-      } else {
-        alert("Error al agendar la cita: " + (data.error || "Desconocido"));
-      }
-    })
-    .catch((error) => {
-      alert("Error de red o del servidor: " + error);
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.success) {
+      
+      alert("Cita registrada Correctamente. ID de cita: " + data.citaId);
+    } else {
+      alert("Error al agendar la cita: " + (data.error || "Desconocido"));
+    }
+  })
+  .catch((error) => {
+    alert("Error de red o del servidor: " + error);
+  });
+
+
+  document.getElementById("appointment-form").reset();
+
+
+
 });

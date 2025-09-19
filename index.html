@@ -1,59 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Citas - Consultorio Odontológico</title>
+    <title>Bienvenido - Gestión de Citas Odontológicas</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Consultorio Odontológico</h1>
+        <h1>Bienvenido al Sistema de Gestión de Citas</h1>
     </header>
     <main>
-        <section class="form-container">
-            <h2>Agendar una Cita</h2>
-<form id="appointment-form">
-    <label for="name">Nombre:</label>
-    <input type="text" id="name" placeholder="Ingresa tu nombre" required>
-
-    <label for="email">Correo Electrónico:</label>
-    <input type="email" id="email" placeholder="Ingresa tu correo" required>
-
-    <label for="date">Fecha:</label>
-    <input type="date" id="date" required>
-
-    <label for="time">Hora:</label>
-    <input type="time" id="time" required>
-
-    <label for="procedure">Procedimiento:</label>
-    <select id="procedure" required>
-        <option value="" disabled selected>Selecciona un procedimiento</option>
-        <option value="Evaluación">Evaluación</option>
-        <option value="Extracciones">Extracciones</option>
-        <option value="Emergencias">Emergencias</option>
-        <option value="Limpieza">Limpieza</option>
-        <option value="Ortodoncia">Ortodoncia</option>
-        <option value="Seguimiento de Ortodoncia">Seguimiento de Ortodoncia</option>
-        <option value="Prótesis">Prótesis</option>
-        <option value="Otros">Otros</option>
-    </select>
-
-    <button type="submit">Agendar Cita</button>
-   
-</form>
-
-
-
-            </form>
-        </section>
-        <section class="appointments">
-            <button type="submit">Ver citas Programadas</button>
+        <section class="welcome-container">
+            <h2>BackOffice para Odontólogos</h2>
+            <p>Accede al panel administrativo para gestionar y registrar citas.</p>
+            <a href="/admin"><button>Ir al BackOffice</button></a>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 Consultorio Odontológico</p>
-    </footer>
-    <script src="app.js"></script>
 </body>
 </html>

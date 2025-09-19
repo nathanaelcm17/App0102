@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BackOffice Gestion de Citas</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
+</head>
+<body>
+  <header>
+    <h1>BackOffice Gestion de Citas</h1>
+    <button id="logout-btn">Cerrar Sesión</button>
+  </header>
+  <main class="main-content">
+    <nav class="admin-panel">
+      <div class="admin-panel-header">Panel Administrativo</div>
+      <button id="nav-calendar" class="selected">Ver Calendario</button>
+      <button id="nav-list">Ver Listado</button>
+      <button id="nav-register">Registrar Nueva Cita</button>
+    </nav>
+    <section class="content-area">
+      <div id="calendar-view" class="content-modal" style="display:block;">
+        <div id="calendar"></div>
+      </div>
+      <div id="list-view" class="content-modal" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+          <h2 style="margin:0;">Citas Programadas</h2>
+          <button id="export-excel-btn" class="modern-btn" style="width:auto;padding:8px 18px;font-size:0.98rem;">Exportar a Excel</button>
+        </div>
+        <div class="table-search-bar">
+          <input type="text" id="search-global" placeholder="Buscar en todas las columnas...">
+        </div>
+        <section id="appointments-section">
+          <table id="appointments-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Email</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Procedimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las citas se cargarán aquí -->
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </section>
+    <!-- Formulario de registro de cita (modal) -->
+    <div id="modal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <h2>Registrar Nueva Cita</h2>
+        <form id="appointment-form">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" required>
+          <label for="email">Email:</label>
+          <input type="email" id="email" required>
+          <label for="date">Fecha:</label>
+          <input type="date" id="date" required>
+          <label for="time">Hora:</label>
+          <input type="time" id="time" required>
+          <label for="procedure">Procedimiento:</label>
+          <input type="text" id="procedure" required>
+          <button type="submit">Registrar Cita</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

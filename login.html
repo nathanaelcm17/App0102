@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - BackOffice Odontólogos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background:#102040;">
+  <div class="login-wrapper">
+    <div class="login-image" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <div class="logo-innovatrix">
+        <svg width="160" height="160" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="60,10 110,40 110,90 60,120 10,90 10,40" stroke="#fff" stroke-width="8" fill="none"/>
+          <text x="50%" y="67%" text-anchor="middle" fill="#fff" font-size="60" font-family="Segoe UI, Arial, sans-serif" font-weight="bold" dy="-8">N</text>
+        </svg>
+      </div>
+    </div>
+    <div class="login-container modern-card">
+      <h2 class="login-title">Bienvenido</h2>
+      <form id="login-form" class="modern-form">
+        <div class="input-group">
+          <label for="username"><span class="material-symbols-outlined">person</span> Usuario</label>
+          <input type="text" id="username" required autocomplete="username">
+        </div>
+        <div class="input-group">
+          <label for="password"><span class="material-symbols-outlined">lock</span> Contraseña</label>
+          <input type="password" id="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="modern-btn">Entrar</button>
+      </form>
+      <div id="login-error" class="login-error"></div>
+    </div>
+  </div>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script src="login.js"></script>
+</body>
+</html>

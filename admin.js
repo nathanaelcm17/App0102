@@ -90,6 +90,27 @@ document.addEventListener("DOMContentLoaded", () => {
     if (input) input.addEventListener("input", filterAppointments);
   });
 
+  // --- Filtro de tabla por búsqueda global ---
+  const searchGlobal = document.getElementById("search-global");
+
+  function filterAppointmentsGlobal() {
+    const value = searchGlobal.value.trim().toLowerCase();
+    let filtered = allAppointments.filter(cita => {
+      return (
+        cita.id.toString().toLowerCase().includes(value) ||
+        cita.nombre_paciente.toLowerCase().includes(value) ||
+        cita.email.toLowerCase().includes(value) ||
+        cita.fecha.toLowerCase().includes(value) ||
+        cita.hora.toLowerCase().includes(value) ||
+        cita.procedimiento.toLowerCase().includes(value)
+      );
+    });
+    renderAppointmentsTable(filtered);
+  }
+  if (searchGlobal) {
+    searchGlobal.addEventListener("input", filterAppointmentsGlobal);
+  }
+
   // Cargar citas al iniciar y para el calendario
   function loadAppointments() {
     fetch("/api/citas")

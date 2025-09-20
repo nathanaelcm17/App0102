@@ -17,6 +17,12 @@
 </head>
 <body>
     <header>
+        <button class="logo-mini" id="logo-login-btn" aria-label="Inicio">
+            <svg width="38" height="38" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="60,10 110,40 110,90 60,120 10,90 10,40" stroke="#fff" stroke-width="8" fill="none"/>
+                <text x="50%" y="60%" text-anchor="middle" fill="#fff" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="bold" dominant-baseline="middle">N</text>
+            </svg>
+        </button>
         <h1>Bienvenido al Sistema de Gestión de Citas</h1>
     </header>
     <main>
@@ -32,5 +38,15 @@
           <button id="order-by-fecha-btn" type="button" style="padding:4px 12px;border-radius:6px;border:1px solid #d1d5db;background:#f4f6f8;cursor:pointer;">Fecha</button>
         </div>
     </main>
+    <script>
+// Animación de giro para el logo en login
+const logoLoginBtn = document.getElementById('logo-login-btn');
+if (logoLoginBtn) {
+  logoLoginBtn.addEventListener('click', () => {
+    logoLoginBtn.classList.add('rotating');
+    setTimeout(() => logoLoginBtn.classList.remove('rotating'), 1344);
+  });
+}
+</script>
 </body>
 </html>

@@ -3,22 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BackOffice Gestion de Citas</title>
+  <title>InnovaTrix - Citas</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
 </head>
 <body>
   <header>
-    <h1>BackOffice Gestion de Citas</h1>
-    <button id="logout-btn">Cerrar Sesión</button>
+    <button class="logo-mini" id="logo-menu-btn" aria-label="Abrir menú">
+      <svg width="38" height="38" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="60,10 110,40 110,90 60,120 10,90 10,40" stroke="#fff" stroke-width="8" fill="none"/>
+        <text x="50%" y="60%" text-anchor="middle" fill="#fff" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="bold" dominant-baseline="middle">N</text>
+      </svg>
+    </button>
+    <button id="user-btn" class="user-btn" aria-label="Usuario" style="margin-left:auto;">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="12" r="7" stroke="#fff" stroke-width="2.2" fill="none"/>
+        <path d="M5 27c0-4.5 4.9-8 11-8s11 3.5 11 8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span id="user-btn-name" style="margin-left:7px;font-weight:500;font-size:1rem;color:#fff;"></span>
+    </button>
+    <div id="user-menu" class="user-menu" style="display:none;">
+      <div class="user-menu-info">
+        <div class="user-menu-icon">
+          <svg width="38" height="38" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="12" r="7" stroke="#3949ab" stroke-width="2.2" fill="none"/>
+            <path d="M5 27c0-4.5 4.9-8 11-8s11 3.5 11 8" stroke="#3949ab" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="user-menu-details">
+          <div id="user-menu-name" class="user-menu-name">Usuario</div>
+          <div id="user-menu-email" class="user-menu-email">correo@ejemplo.com</div>
+        </div>
+      </div>
+      <button id="logout-btn-menu" class="logout-btn" style="width:100%;margin:18px 0 0 0;">Cerrar Sesión</button>
+    </div>
   </header>
+  <nav class="admin-panel">
+    <div class="admin-panel-header" style="display:none;">Panel Administrativo</div>
+    <button id="nav-calendar" class="selected">Ver Calendario</button>
+    <button id="nav-list">Ver Listado</button>
+    <button id="nav-register" style="display:none;">Nueva Cita</button>
+    <button id="nav-inventory">Inventario</button>
+  </nav>
   <main class="main-content">
-    <nav class="admin-panel">
-      <div class="admin-panel-header">Panel Administrativo</div>
-      <button id="nav-calendar" class="selected">Ver Calendario</button>
-      <button id="nav-list">Ver Listado</button>
-      <button id="nav-register">Registrar Nueva Cita</button>
-    </nav>
     <section class="content-area">
       <div id="calendar-view" class="content-modal" style="display:block;">
         <div id="calendar"></div>
@@ -49,6 +76,36 @@
           </table>
         </section>
       </div>
+      <div id="inventory-view" class="content-modal" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+          <h2 style="margin:0;">Inventario</h2>
+          <button id="add-inventory-btn" class="modern-btn" style="width:auto;padding:8px 18px;font-size:0.98rem;">Agregar Producto</button>
+        </div>
+        <div class="table-search-bar">
+          <input type="text" id="search-inventory" placeholder="Buscar producto, categoría o proveedor...">
+        </div>
+        <section id="inventory-section">
+          <table id="inventory-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Cantidad</th>
+                <th>Unidad</th>
+                <th>Proveedor</th>
+                <th>Fecha Ingreso</th>
+                <th>Stock Mínimo</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Productos se cargarán aquí -->
+            </tbody>
+          </table>
+        </section>
+      </div>
     </section>
     <!-- Formulario de registro de cita (modal) -->
     <div id="modal" class="modal" style="display:none;">
@@ -57,21 +114,77 @@
         <h2>Registrar Nueva Cita</h2>
         <form id="appointment-form">
           <label for="name">Nombre:</label>
-          <input type="text" id="name" required>
+          <input type="text" id="name" required maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{1,100}" title="Solo letras y espacios, máximo 100 caracteres">
           <label for="email">Email:</label>
-          <input type="email" id="email" required>
+          <input type="email" id="email" required pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" title="Ingrese un correo electrónico válido">
           <label for="date">Fecha:</label>
           <input type="date" id="date" required>
           <label for="time">Hora:</label>
           <input type="time" id="time" required>
           <label for="procedure">Procedimiento:</label>
-          <input type="text" id="procedure" required>
+          <select id="procedure" required>
+            <option value="">Seleccione...</option>
+            <option value="Limpieza">Limpieza</option>
+            <option value="Extracción">Extracción</option>
+            <option value="Resina">Resina</option>
+            <option value="Endodoncia">Endodoncia</option>
+            <option value="Ortodoncia">Ortodoncia</option>
+            <option value="Blanqueamiento">Blanqueamiento</option>
+            <option value="Consulta">Consulta</option>
+          </select>
           <button type="submit">Registrar Cita</button>
+        </form>
+      </div>
+    </div>
+    <!-- Modal de inventario -->
+    <div id="modal-inventory" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span id="close-modal-inventory" class="close">&times;</span>
+        <h2 id="inventory-modal-title">Agregar Producto</h2>
+        <form id="inventory-form">
+          <label for="inv-nombre">Nombre:</label>
+          <input type="text" id="inv-nombre" required>
+          <label for="inv-categoria">Categoría:</label>
+          <input type="text" id="inv-categoria">
+          <label for="inv-cantidad">Cantidad:</label>
+          <input type="number" id="inv-cantidad" required min="0">
+          <label for="inv-unidad">Unidad:</label>
+          <input type="text" id="inv-unidad">
+          <label for="inv-proveedor">Proveedor:</label>
+          <input type="text" id="inv-proveedor">
+          <label for="inv-fecha">Fecha de Ingreso:</label>
+          <input type="date" id="inv-fecha">
+          <label for="inv-stock-minimo">Stock Mínimo:</label>
+          <input type="number" id="inv-stock-minimo" min="0">
+          <label for="inv-observaciones">Observaciones:</label>
+          <textarea id="inv-observaciones" rows="2"></textarea>
+          <button type="submit">Guardar</button>
         </form>
       </div>
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
   <script src="admin.js"></script>
+  <script>
+// Redirección a login si no hay sesión activa
+fetch('/api/check-session').then(res => {
+  if (res.status !== 200) {
+    window.location.href = '/login';
+  }
+});
+
+// Funcionalidad: mostrar/ocultar panel admin con el logo
+const logoBtn = document.getElementById('logo-menu-btn');
+const adminPanel = document.querySelector('.admin-panel');
+const mainContent = document.querySelector('.main-content');
+if (logoBtn && adminPanel && mainContent) {
+  logoBtn.addEventListener('click', () => {
+    adminPanel.classList.toggle('closed');
+    mainContent.classList.toggle('panel-closed');
+    logoBtn.classList.add('rotating');
+    setTimeout(() => logoBtn.classList.remove('rotating'), 1344);
+  });
+}
+</script>
 </body>
 </html>

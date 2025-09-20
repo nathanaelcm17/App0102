@@ -1,0 +1,136 @@
+# Manual de Integración de WhatsApp Business API para Registro de Citas
+
+## 1. Introducción
+Este manual describe cómo integrar el registro de citas de tu sistema odontológico con WhatsApp Business usando Meta Cloud API y Twilio, enviando los datos al endpoint:
+
+```
+POST http://<TU_DOMINIO_O_IP>:3001/api/whatsapp-cita
+Content-Type: application/json
+```
+
+### Campos requeridos en el JSON:
+- nombre (string, obligatorio)
+- email (string, opcional)
+- fecha (string, obligatorio, formato YYYY-MM-DD)
+- hora (string, obligatorio, formato HH:MM)
+- procedimiento (string, obligatorio)
+
+---
+
+## 2. Integración con Meta WhatsApp Cloud API
+
+### a) Crear App y Número de WhatsApp
+1. Ingresa a [Meta for Developers](https://developers.facebook.com/).
+2. Crea una nueva App y configura WhatsApp Business.
+3. Obtén tu número de teléfono de prueba y el token de acceso.
+
+### b) Configurar Webhook
+1. En el panel de WhatsApp, ve a "Configuración > Webhooks".
+2. Agrega la URL de tu endpoint:
+   - Ejemplo: `https://tudominio.com/api/whatsapp-cita`
+3. Selecciona los eventos de mensajes entrantes.
+
+### c) Procesar Mensajes
+1. Cuando recibas un mensaje, tu webhook recibirá un JSON con los datos del usuario y el mensaje.
+2. Debes extraer los datos necesarios (nombre, fecha, hora, procedimiento) del texto del mensaje.
+3. Realiza una petición POST a tu endpoint:
+
+```json
+{
+  "nombre": "Juan Perez",
+  "email": "juan@email.com",
+  "fecha": "2025-09-20",
+  "hora": "10:30",
+  "procedimiento": "Limpieza dental"
+}
+```
+
+#### Ejemplo de código intermedio (Node.js) para Meta:
+```js
+app.post('/webhook-meta', (req, res) => {
+  const entry = req.body.entry?.[0]?.changes?.[0]?.value;
+  const mensaje = entry?.messages?.[0]?.text?.body || '';
+  // Aquí debes parsear el mensaje para extraer los datos
+  // Ejemplo simple (ajusta según tu formato de mensaje):
+  // "Nombre: Juan Perez, Email: juan@email.com, Fecha: 2025-09-20, Hora: 10:30, Procedimiento: Limpieza dental"
+  const datos = {};
+  mensaje.split(',').forEach(parte => {
+    const [clave, valor] = parte.split(':').map(s => s.trim());
+    if (clave && valor) datos[clave.toLowerCase()] = valor;
+  });
+  const cita = {
+    nombre: datos['nombre'],
+    email: datos['email'],
+    fecha: datos['fecha'],
+    hora: datos['hora'],
+    procedimiento: datos['procedimiento']
+  };
+  fetch('http://localhost:3001/api/whatsapp-cita', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cita)
+  });
+  res.send('OK');
+});
+```
+
+---
+
+## 3. Integración con Twilio WhatsApp API
+
+### a) Crear Cuenta y Sandbox
+1. Regístrate en [Twilio](https://www.twilio.com/).
+2. Activa el Sandbox de WhatsApp y obtén el número y el token.
+
+### b) Configurar Webhook
+1. En la consola de Twilio, ve a "Messaging > Try it Out > Send a WhatsApp message".
+2. Configura el webhook de mensajes entrantes apuntando a:
+   - `https://tudominio.com/api/whatsapp-cita`
+
+### c) Procesar Mensajes
+1. Twilio enviará los mensajes recibidos a tu endpoint como parámetros POST (formato x-www-form-urlencoded).
+2. Debes convertir los parámetros a JSON y extraer los datos requeridos.
+3. Realiza una petición POST a tu endpoint con el formato JSON mostrado arriba.
+
+#### Ejemplo de código intermedio (Node.js) para Twilio:
+```js
+const express = require('express');
+const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.post('/webhook-twilio', (req, res) => {
+  const mensaje = req.body.Body || '';
+  // Parsear el mensaje igual que en el ejemplo de Meta
+  const datos = {};
+  mensaje.split(',').forEach(parte => {
+    const [clave, valor] = parte.split(':').map(s => s.trim());
+    if (clave && valor) datos[clave.toLowerCase()] = valor;
+  });
+  const cita = {
+    nombre: datos['nombre'],
+    email: datos['email'],
+    fecha: datos['fecha'],
+    hora: datos['hora'],
+    procedimiento: datos['procedimiento']
+  };
+  fetch('http://localhost:3001/api/whatsapp-cita', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cita)
+  });
+  res.send('OK');
+});
+```
+
+---
+
+## 4. Notas de Seguridad
+- Asegúrate de validar y sanitizar los datos recibidos.
+- Considera agregar autenticación o validación de origen para el endpoint si es necesario.
+
+---
+
+## 5. Soporte
+Para dudas técnicas, contacta a tu desarrollador o consulta la documentación oficial de [Meta WhatsApp Cloud API](https://developers.facebook.com/docs/whatsapp) y [Twilio WhatsApp API](https://www.twilio.com/docs/whatsapp).

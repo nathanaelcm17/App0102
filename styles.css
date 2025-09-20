@@ -1,13 +1,13 @@
-/* styles.css - Estilo empresarial y moderno mejorado */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f4f6f8;
+  background: #e3e6ec;
   margin: 0;
   color: #222;
+  padding-top: 44px; /* 🔑 espacio para el header */
 }
 
 header {
-  background: #1a237e;
+ background: #102040;
   color: #fff;
   padding: 0;
   margin: 0;
@@ -19,7 +19,16 @@ header {
   align-items: center;
   height: 44px;
   border-radius: 0;
-  z-index: 2;
+  z-index: 200;
+  
+  /* 🔑 ahora fijo */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  justify-content: flex-start !important;
+  border-bottom: 1.5px solid #283593;
+  border-left: 1.5px solid #283593;
 }
 
 header h1 {
@@ -31,91 +40,119 @@ header h1 {
   font-family: inherit;
 }
 
-main, .main-content {
+/* Logo como botón */
+.logo-mini {
   display: flex;
-  max-width: 1200px;
-  margin: 32px auto;
-  background: #fff;
-  border-radius: 0 12px 12px 12px;
-  box-shadow: 0 2px 16px rgba(60,72,88,0.10);
+  align-items: center;
+  justify-content: flex-start;
+  height: 44px;
+  margin-left: 12px;
+  margin-right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
   padding: 0;
-  min-height: 600px;
-  position: relative;
+  transition: background 0.2s, box-shadow 0.2s, transform 1.344s cubic-bezier(.4,2,.6,1);
+  border-radius: 50%;
+  box-shadow: none;
+  width: 48px;
+  height: 48px;
+}
+.logo-mini:focus, .logo-mini:hover {
+  background: rgba(16,32,64,0.13);
+  outline: none;
+  box-shadow: 0 4px 16px 0 rgba(60,72,88,0.18);
+  transform: scale(1.2) rotate(-8deg);
+}
+.logo-mini.rotating {
+  animation: spin-logo 1.344s cubic-bezier(.4,2,.6,1);
+}
+@keyframes spin-logo {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .admin-panel {
   width: 220px;
-  background: #1a237e;
+  background: #102040;
   color: #fff;
-  border-radius: 12px 0 0 12px;
   padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 600px;
   font-family: 'Segoe UI', Arial, sans-serif;
   box-shadow: 2px 0 8px rgba(26,35,126,0.08);
-  position: absolute;
-  top: 0;
+
+  /* 🔑 ahora fijo */
+  position: fixed;
+  top: 44px;       /* debajo del header */
   left: 0;
-  bottom: 0;
-  height: 100%;
-  z-index: 1;
+  height: calc(100vh - 44px);
+  border-radius: 0;
+  z-index: 150;
+  border-top: 1.5px solid #283593;
+  transition: transform 0.6s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+  will-change: transform;
+}
+.admin-panel.closed {
+  transform: translateY(-120%);
+  box-shadow: none;
+}
+.main-content.panel-closed {
+  background: #e3e6ec !important;
+  margin-left: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.main-content.panel-closed .content-area {
+  margin-left: 0 !important;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content.panel-closed .content-modal {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 32px;
+}
+@media (max-width: 900px) {
+  .main-content.panel-closed .content-modal {
+    max-width: 98vw;
+    padding: 0 2vw;
+  }
 }
 
 .admin-panel-header {
   width: 100%;
-  background: #1a237e;
+  background: #102040;
   color: #fff;
   font-size: 1.08rem;
   font-weight: 700;
   text-align: center;
   padding: 18px 0 12px 0;
-  border-radius: 12px 0 0 0;
   letter-spacing: 1px;
   margin-bottom: 12px;
   border-bottom: 1px solid #283593;
   box-shadow: 0 2px 8px rgba(26,35,126,0.08);
+  border-radius: 0; /* 🔑 sin esquinas redondeadas */
 }
 
 .admin-panel::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 44px;
-  background: #1a237e;
-  z-index: 2;
-  border-radius: 12px 0 0 0;
-}
-
-.admin-panel button {
-  width: 80%;
-  margin: 56px 0 0 0;
-  background: #283593;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 14px 0;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  font-family: inherit;
-  font-weight: 600;
-  letter-spacing: 1px;
-  z-index: 3;
-  position: relative;
-}
-
-.admin-panel button.selected, .admin-panel button:hover {
-  background: #fff;
-  color: #1a237e;
+  display: none; /* 🔑 ya no se necesita */
 }
 
 .content-area {
   flex: 1;
   padding: 40px 40px 40px 40px;
-  margin-left: 220px;
-  background: #f4f6f8;
+  margin-left: 220px;   /* espacio del sidebar */
+  background: #e3e6ec !important;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -123,169 +160,22 @@ main, .main-content {
   justify-content: flex-start;
 }
 
-.content-modal {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(60,72,88,0.10);
-  padding: 32px 28px 24px 28px;
-  margin-bottom: 32px;
-  min-height: 420px;
-  width: 100%;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 2;
+/* Aplica fondo gris a todas las áreas principales de contenido del admin panel */
+.content-area, #list-view, #stats-view, #registro-view, #usuarios-view, #reportes-view {
+  background: #e3e6ec;
+  flex: 1;
+  padding: 40px 40px 40px 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
-h2 {
-    color: #0074D9;
-    margin-bottom: 10px;
+body.login-page {
+  background: #102040;
+  padding-top: 0;
 }
-
-.form-container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin: 10px 0 5px;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-button {
-  background: #3949ab;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 22px;
-  font-size: 1rem;
-  margin: 8px 0;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-button:hover {
-  background: #283593;
-}
-
-#logout-btn {
-  margin-left: auto;
-  margin-right: 24px;
-  background: #e53935;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 6px 16px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  font-family: inherit;
-  font-weight: 500;
-  height: 32px;
-  min-width: 80px;
-  box-shadow: 0 1px 4px rgba(60,72,88,0.07);
-}
-
-#logout-btn:hover {
-  background: #b71c1c;
-}
-
-#appointments-section {
-  margin-top: 32px;
-}
-
-#appointments-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-  background: #fafbfc;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 4px rgba(60,72,88,0.07);
-}
-
-#appointments-table th, #appointments-table td {
-  padding: 12px 10px;
-  border-bottom: 1px solid #e0e0e0;
-  text-align: left;
-}
-
-#appointments-table th {
-  background: #e8eaf6;
-  color: #1a237e;
-  font-weight: 600;
-}
-
-#appointments-table tr:last-child td {
-  border-bottom: none;
-}
-
-.modal {
-  position: fixed;
-  z-index: 1000;
-  left: 0; top: 0; width: 100vw; height: 100vh;
-  background: rgba(30, 34, 90, 0.18);
-  display: flex; align-items: center; justify-content: center;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 32px 28px 24px 28px;
-  border-radius: 10px;
-  box-shadow: 0 4px 24px rgba(60,72,88,0.18);
-  min-width: 320px;
-  max-width: 400px;
-  position: relative;
-  margin: auto;
-}
-
-.close {
-  position: absolute;
-  right: 18px; top: 12px;
-  font-size: 1.5rem;
-  color: #888;
-  cursor: pointer;
-}
-
-.close:hover { color: #e53935; }
-
-form label {
-  display: block;
-  margin-top: 12px;
-  font-weight: 500;
-}
-
-form input, form select {
-  width: 100%;
-  padding: 8px 10px;
-  margin-top: 4px;
-  border: 1px solid #bdbdbd;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: #f7f8fa;
-  margin-bottom: 8px;
-}
-
-form button[type="submit"] {
-  width: 100%;
-  margin-top: 18px;
-  background: #1a237e;
-  font-weight: 600;
-}
-
-/* Login modal centrado */
 .login-wrapper {
   display: flex;
   min-height: 100vh;
@@ -304,14 +194,16 @@ form button[type="submit"] {
   max-height: 600px;
   box-sizing: border-box;
 }
-.login-image img {
-  max-width: 90%;
-  max-height: 320px;
-  width: auto;
-  height: auto;
+.logo-innovatrix {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.logo-innovatrix svg {
   display: block;
-  margin: 0 auto;
-  object-fit: contain;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 4px 24px rgba(16,32,64,0.18));
 }
 .login-container {
   flex: 0 0 360px;
@@ -324,52 +216,6 @@ form button[type="submit"] {
   align-items: center;
   min-height: 420px;
 }
-.login-container h2 {
-  color: #1a237e;
-  margin-bottom: 18px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-.login-container label {
-  color: #1a237e;
-  font-weight: 500;
-}
-.login-container input {
-  border: 1px solid #bdbdbd;
-  border-radius: 5px;
-  padding: 8px 10px;
-  width: 100%;
-  margin-bottom: 12px;
-  background: #f7f8fa;
-  font-size: 1rem;
-}
-.login-container button[type="submit"] {
-  width: 100%;
-  margin-top: 12px;
-  background: #1a237e;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 0;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.login-container button[type="submit"]:hover {
-  background: #283593;
-}
-.logo-innovatrix {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 32px;
-}
-.logo-innovatrix svg {
-  display: block;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 4px 24px rgba(16,32,64,0.18));
-}
 .login-title {
   color: #1a237e;
   margin-bottom: 18px;
@@ -377,21 +223,6 @@ form button[type="submit"] {
   letter-spacing: 2px;
   font-size: 2.1rem;
   text-align: center;
-}
-.modern-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(16,32,64,0.18);
-  padding: 48px 36px 36px 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 420px;
-  min-width: 340px;
-  max-width: 400px;
-  gap: 12px;
-  position: relative;
-  overflow: hidden;
 }
 .modern-form {
   width: 100%;
@@ -461,87 +292,633 @@ form button[type="submit"] {
   display: inline-block;
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
-.table-search-bar {
+
+/* MODAL DE REGISTRO DE CITA */
+#modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(16,32,64,0.18);
+  justify-content: center;
+  align-items: center;
+}
+#modal .modal-content {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 12px 48px rgba(16,32,64,0.22);
+  padding: 44px 48px 36px 48px;
+  min-width: 340px;
+  max-width: 520px;
+  width: 100%;
   display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0 auto;
+  left: 0;
+  top: 0;
+  transform: none;
 }
-.table-search-bar input {
-  padding: 8px 10px;
+#modal h2 {
+  color: #1a237e;
+  margin-bottom: 22px;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+#modal label {
+  color: #1a237e;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  font-size: 1.04rem;
+  align-self: flex-start;
+}
+#modal input[type="text"],
+#modal input[type="email"],
+#modal input[type="date"],
+#modal input[type="time"] {
   border: 1.5px solid #bdbdbd;
-  border-radius: 6px;
-  font-size: 1rem;
+  border-radius: 7px;
+  padding: 10px 12px;
+  width: 100%;
   background: #f7f8fa;
-  min-width: 120px;
+  font-size: 1.08rem;
+  margin-bottom: 10px;
   transition: border 0.2s;
+  box-sizing: border-box;
 }
-.table-search-bar input:focus {
+#modal input:focus {
   border: 1.5px solid #3949ab;
   outline: none;
 }
-@media (max-width: 900px) {
-  header {
-    height: 36px;
+#modal .close {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-size: 2.2rem;
+  color: #3949ab;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+#modal .close:hover {
+  color: #e53935;
+}
+@media (max-width: 700px) {
+  #modal .modal-content {
+    max-width: 98vw;
+    min-width: unset;
+    padding: 18px 4vw 18px 4vw;
   }
-  header h1 {
-    font-size: 0.95rem;
-    margin-left: 8px;
+}
+/* ...existing code... */
+#modal-inventory {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(16,32,64,0.18);
+  justify-content: center;
+  align-items: center;
+  /* Centrado absoluto */
+  box-sizing: border-box;
+}
+#modal-inventory .modal-content {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(16,32,64,0.18);
+  padding: 36px 32px 28px 32px;
+  min-width: 320px;
+  max-width: 98vw;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  margin: 0;
+  left: 0;
+  top: 0;
+  transform: none;
+}
+#modal-inventory label {
+  color: #1a237e;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  text-align: left;
+}
+#modal-inventory input[type="text"],
+#modal-inventory input[type="number"],
+#modal-inventory input[type="date"],
+#modal-inventory textarea {
+  border: 1.5px solid #bdbdbd;
+  border-radius: 7px;
+  padding: 10px 12px;
+  width: 100%;
+  background: #f7f8fa;
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+  transition: border 0.2s;
+  box-sizing: border-box;
+}
+#modal-inventory input:focus, #modal-inventory textarea:focus {
+  border: 1.5px solid #3949ab;
+  outline: none;
+}
+#modal-inventory button[type="submit"] {
+  margin-top: 18px;
+  background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(60,72,88,0.10);
+  transition: background 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+#modal-inventory button[type="submit"]:hover {
+  background: linear-gradient(90deg, #3949ab 60%, #1a237e 100%);
+  box-shadow: 0 4px 16px rgba(60,72,88,0.16);
+}
+#modal-inventory .close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 2rem;
+  color: #3949ab;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+#modal-inventory .close:hover {
+  color: #e53935;
+}
+#modal-inventory h2 {
+  color: #1a237e;
+  margin-bottom: 18px;
+  font-size: 1.4rem;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  #modal-inventory .modal-content {
+    width: 98vw;
+    min-width: unset;
+    padding: 18px 6vw 18px 6vw;
   }
-  #logout-btn {
-    margin-right: 8px;
-    padding: 4px 8px;
-    font-size: 0.85rem;
-    height: 24px;
-    min-width: 60px;
+}
+#inventory-table td[style*="background:#fff3e0"] {
+  background: #fff3e0 !important;
+  color: #e65100 !important;
+  font-weight: bold;
+}
+
+/* TABLA MODERNA DE CITAS */
+#appointments-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(16,32,64,0.10);
+  overflow: hidden;
+  margin-bottom: 18px;
+  font-size: 1.01rem;
+}
+#appointments-table th, #appointments-table td {
+  padding: 12px 10px;
+  text-align: left;
+}
+#appointments-table thead th {
+  background: #102040;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+#appointments-table tbody tr {
+  transition: background 0.18s;
+}
+#appointments-table tbody tr:hover {
+  background: #102040 !important;
+  color: #fff !important;
+}
+#appointments-table tbody tr.selected {
+  background: #102040 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 12px 0 rgba(16,32,64,0.10);
+}
+#appointments-table tbody tr:hover td {
+  color: #fff !important;
+}
+.table-search-bar {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+#search-global {
+  border: 1.5px solid #bdbdbd;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-size: 1.08rem;
+  width: 260px;
+  background: #f7f8fa;
+  transition: border 0.2s;
+}
+#search-global:focus {
+  border: 1.5px solid #3949ab;
+  outline: none;
+}
+@media (max-width: 700px) {
+  #appointments-table, #appointments-table thead, #appointments-table tbody, #appointments-table th, #appointments-table td, #appointments-table tr {
+    display: block;
   }
-  .admin-panel {
-    width: 100%;
-    flex-direction: row;
-    min-height: unset;
-    padding: 0;
-    justify-content: center;
-    border-radius: 0;
-    box-shadow: none;
+  #appointments-table th {
     position: static;
+  }
+  #appointments-table td {
+    border-bottom: 1px solid #e0e0e0;
+  }
+}
+
+@media (max-width: 900px) {
+  .login-wrapper {
+    flex-direction: column;
+  }
+  .login-image, .login-container {
+    flex: unset;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    min-height: unset;
+    padding: 32px 12vw 18px 12vw;
+    max-height: unset;
     height: auto;
   }
-  .admin-panel-header {
-    border-radius: 0;
-    font-size: 1rem;
-    padding: 10px 0 8px 0;
-    margin-bottom: 0;
+  .logo-innovatrix svg {
+    width: 100px;
+    height: 100px;
   }
-  .admin-panel::before {
-    display: none;
-  }
-  .admin-panel button {
-    margin: 0 8px 0 0;
-    padding: 10px 0;
-    font-size: 0.95rem;
-  }
-  .main-content {
-    flex-direction: column;
-    padding: 0;
+  .login-container {
     border-radius: 0 0 12px 12px;
   }
-  .content-area {
-    margin-left: 0;
-    padding: 18px 4vw 18px 4vw;
-  }
-  .content-modal {
-    min-width: 90vw;
-    max-width: 98vw;
-    padding: 18px 4vw 18px 4vw;
-  }
-  .table-search-bar {
-    flex-direction: column;
-    gap: 6px;
-  }
-  .table-search-bar input {
-    min-width: 0;
-    width: 100%;
-  }
+}
+
+.logout-btn {
+  margin-left: auto;
+  margin-right: 40px;
+  background: linear-gradient(90deg, #3949ab 60%, #1a237e 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 8.5px 20.4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(60,72,88,0.10);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.logout-btn:hover {
+  background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
+  box-shadow: 0 4px 16px rgba(60,72,88,0.16);
+}
+
+.admin-panel button {
+  width: 90%;
+  margin: 8px 0;
+  background: linear-gradient(90deg, #3949ab 60%, #1a237e 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 24px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(60,72,88,0.10);
+  transition: background 0.2s, box-shadow 0.2s;
+  text-align: left;
+}
+.admin-panel button.selected, .admin-panel button:hover {
+  background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
+  box-shadow: 0 4px 16px rgba(60,72,88,0.16);
+}
+
+#calendar-view {
+  padding: 32px 32px 32px 32px !important;
+  background: #fff;
+  min-height: unset;
+  box-shadow: unset;
+  border-radius: 32px;
+}
+#calendar {
+  margin-top: 18px;
+  margin-bottom: 18px;
+  margin-left: 0;
+  margin-right: 0;
+  border-radius: 32px;
+  overflow: hidden;
+}
+
+/* REVERT: Elimina el fondo forzado gris en #calendar-view y #calendar */
+#calendar {
+  --fc-page-bg-color: #fff;
+  background: #fff;
+}
+
+/* FullCalendar Bootstrap 5 theme y tooltips modernos */
+.fc-tooltip {
+  background: #222;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.97;
+}
+/* Badge de estado en eventos */
+.badge.bg-success {
+  background: #28a745;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-left: 6px;
+}
+
+#appointment-form button[type="submit"] {
+  width: 100%;
+  min-width: 180px;
+  padding: 12px 0;
+  font-size: 1.08rem;
+  border-radius: 8px;
+  margin-top: 18px;
+  background: #102040;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#inventory-view {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(16,32,64,0.10);
+  padding: 32px 24px 24px 24px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#inventory-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px rgba(16,32,64,0.08);
+  overflow: hidden;
+  font-size: 1.01rem;
+}
+#inventory-table th {
+  background: #102040;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 8px;
+  border-bottom: 2px solid #3949ab;
+  text-align: left;
+}
+#inventory-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #e3e6ec;
+  background: #fff;
+  color: #222;
+}
+#inventory-table tr:last-child td {
+  border-bottom: none;
+}
+#inventory-table tr:hover {
+  background: #f4f6fa;
+}
+
+#list-view {
+  background: #e3e6ec !important;
+  min-height: 100vh;
+  box-shadow: none;
+  border-radius: 32px;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+#appointments-section {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#appointments-table {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(16,32,64,0.08);
+  margin-top: 0;
+}
+#appointment-form select {
+  border: 1.5px solid #bdbdbd;
+  border-radius: 7px;
+  padding: 10px 12px;
+  width: 100%;
+  background: #f7f8fa;
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+  transition: border 0.2s;
+  box-sizing: border-box;
+  color: #222;
+}
+#appointment-form select:focus {
+  border: 1.5px solid #3949ab;
+  outline: none;
+}
+
+/* --- Detalle de cita tipo card --- */
+.appointment-detail-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(16,32,64,0.18);
+  padding: 32px 36px 28px 36px;
+  min-width: 340px;
+  max-width: 96vw;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 2.5px solid #102040;
+  animation: fadeInCard 0.32s cubic-bezier(.4,2,.6,1);
+}
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translate(-50%, -60%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.appointment-detail-card h3 {
+  margin: 0 0 12px 0;
+  color: #102040;
+  font-size: 1.22rem;
+  font-weight: 700;
+}
+.appointment-detail-card .close-card {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 1.5rem;
+  color: #102040;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.18s;
+}
+.appointment-detail-card .close-card:hover {
+  color: #3949ab;
+}
+.appointment-detail-card .card-row {
+  margin-bottom: 8px;
+  font-size: 1.07rem;
+  color: #222;
+}
+.appointment-detail-card .card-label {
+  font-weight: 600;
+  color: #3949ab;
+  margin-right: 6px;
+}
+
+/* Card de detalle de cita versión pequeña para calendario */
+.appointment-detail-card.appointment-detail-card-small {
+  min-width: 240px;
+  max-width: 340px;
+  padding: 20px 18px 16px 18px;
+}
+.appointment-detail-card.appointment-detail-card-small h3 {
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+}
+.appointment-detail-card.appointment-detail-card-small .card-row {
+  font-size: 0.98rem;
+  margin-bottom: 5px;
+}
+
+/* --- Hover y selección de fila --- */
+#appointments-table tbody tr {
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+#appointments-table tbody tr:hover {
+  background: #102040 !important;
+  color: #fff !important;
+}
+#appointments-table tbody tr.selected {
+  background: #102040 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 12px 0 rgba(16,32,64,0.10);
+}
+#appointments-table tbody tr.selected td {
+  color: #fff !important;
+}
+
+/* --- Hover sobre día del calendario con color intenso tipo admin panel --- */
+.fc-daygrid-day:hover, .fc-daygrid-day.fc-day-today:hover {
+  background: #102040 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 12px 0 rgba(16,32,64,0.13);
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+}
+.fc-daygrid-day:hover * {
+  color: #fff !important;
+}
+
+/* --- Hover sobre evento calendar: estilo admin panel --- */
+.fc-event, .fc-event:hover, .fc-event.fc-event-mirror {
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+}
+.fc-event:hover, .fc-event.fc-event-mirror {
+  background: #102040 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(16,32,64,0.18) !important;
+  border: none !important;
+}
+.fc-event:hover .fc-event-title, .fc-event.fc-event-mirror .fc-event-title {
+  color: #fff !important;
+}
+
+/* --- Botón y menú de usuario en header --- */
+.user-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 12px 0 0;
+  height: 44px;
+  transition: background 0.18s;
+  border-radius: 22px;
+  position: relative;
+}
+.user-btn:hover, .user-btn:focus {
+  background: rgba(57,73,171,0.13);
+}
+.user-menu {
+  position: absolute;
+  top: 54px;
+  right: 32px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(16,32,64,0.18);
+  min-width: 240px;
+  z-index: 9999;
+  padding: 18px 22px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  animation: fadeInCard 0.22s cubic-bezier(.4,2,.6,1);
+}
+.user-menu-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.user-menu-icon {
+  margin-right: 12px;
+}
+.user-menu-name {
+  font-weight: 700;
+  color: #3949ab;
+  font-size: 1.08rem;
+}
+.user-menu-email {
+  color: #222;
+  font-size: 0.98rem;
+  margin-top: 2px;
 }

@@ -4,6 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const loginError = document.getElementById("login-error");
 
+  // Redirigir a /admin si ya hay sesión activa
+  fetch("/api/check-session").then(res => {
+    if (res.status === 200) {
+      window.location.href = "/admin";
+    }
+  });
+
   loginForm.addEventListener("submit", function (e) {
     e.preventDefault();
     const username = document.getElementById("username").value;
